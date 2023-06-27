@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/22 14:06:04 by nmuminov         ###   ########.fr       */
+/*   Updated: 2023/06/27 13:07:55 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,21 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
-#include <pthread.h>
+# include <pthread.h>
+
+#define NBR_PHILO 5
 
 typedef struct s_philo {
-	pthread_t	*thread;
-	int			s;
-	int			nbr_philo;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			time_to_die; 
+	int			id;
+	int			fork;
+	int			eat;
+	int			sleep;
+	int			die; 
+	int			last_meal;
+	int			status;
+	int			nbr_must_eat;
 }			t_philo;
-
-typedef struct s_mutex {
-	
-}			t_mutex
 
 #endif
 
-int gettimeofday()
-void pthread_exit(void *retval);
+void pthread_exit(void *);
