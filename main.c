@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/27 13:07:54 by Probook          ###   ########.fr       */
+/*   Updated: 2023/06/27 13:08:46 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,6 @@ int init_philo(t_philo *philo)
 		i++; 
     }
     return (0);
-}
-
-int	ph_init(t_philo *philos, char **av, int ac, int *stop)
-{
-	int	i;
-	int	goal;
-
-	goal = -1;
-	if (ac == 6)
-		goal = ft_atoi(av[5]);
-	i = 0;
-	while (i < ft_atoi(av[1]))
-	{
-		philos[i].ph_id = i + 1;
-		philos[i].ph_status = 2;
-		philos[i].ph_goal = goal;
-		philos[i].ph_total = ft_atoi(av[1]);
-		philos[i].fork = 1;
-		philos[i].forks = 0;
-		philos[i].stop = stop;
-		philos[i].fork_m = malloc(sizeof(pthread_mutex_t));
-		if (!philos[i].fork_m)
-			return (1);
-		pthread_mutex_init(philos[i].fork_m, NULL);
-		i++;
-	}
-	return (0);
 }
 
 int	mutex_init(t_philo *philo, int argc, char **argv)
