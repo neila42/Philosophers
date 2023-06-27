@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/27 13:07:55 by Probook          ###   ########.fr       */
+/*   Updated: 2023/06/27 15:09:09 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@
 # include <sys/errno.h>
 # include <pthread.h>
 
-#define NBR_PHILO 5
-
 typedef struct s_philo {
+	int			nbr_philo;
 	int			id;
 	int			fork;
-	int			eat;
-	int			sleep;
-	int			die; 
+	int			time_to_eat;
 	int			last_meal;
+	int			time_to_sleep;
+	int			time_to_die; 
 	int			status;
 	int			nbr_must_eat;
+	
 }			t_philo;
+
 
 #endif
 
