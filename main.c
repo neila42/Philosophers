@@ -6,26 +6,64 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/27 15:11:12 by Probook          ###   ########.fr       */
+/*   Updated: 2023/06/28 10:41:55 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void    take_forks(t_philo *philo) //probleme je dois prendre la fourchtte suivante 
+{
+    pthread_mutex_lock(philo->fork);
+    while (philo->fork < 2)
+    {
+        philo_start(set_time(), "The philo took a fork", philo);
+        philo->fork++;
+    }
+}
+
+void    leave_forks(t_philo *philo)
+{
+    while (philo->fork > 0)
+    {
+        pthread_mutex_unlock(philo->fork);
+        philo_start(set_time(), "The philo put the fork down", philo);
+        philo->fork--;
+    }
+}
 
 int philo_day()
 {
     
 }
 
-int philo_die(t_philo *philo)
+void    free()
+{
+    free les philo et les mutexes
+}
+
+void    philo_die(t_philo *philo)
 {
     if (philo->time_to_die < philo->last_meal)
-        philo_status(set_time(), "the philo died", philo)
+        philo_start(set_time(), "the philo died", philo);
 }
 
 void    philo_eat(t_philo *philo)
 {
+    philo_start(set_time(), "the philo is eating", philo);
+    philo->last_meal = set_time;
+    leave_forks(philo);
     philo->nbr_must_eat --;
+}
+
+void    philo_sleep(t_philo *philo)
+{
+    philo_start(set_time(), "the philo is sleeping", philo);   
+}
+
+void    philo_think(t_philo *philo)
+{
+    philo_start(set_time(), "the philo is thinking", philo);
 }
 
 int init_philo(t_philo *philo)
@@ -51,7 +89,7 @@ int init_philo(t_philo *philo)
     return (0);
 }
 
-void    philo_status(t_philo *philo, int time, char *str)
+void    philo_start(t_philo *philo, int time, char *str)
 {
     printf("%d %d %s\n", time, philo->id, str);
 }
