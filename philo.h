@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/27 15:09:09 by Probook          ###   ########.fr       */
+/*   Updated: 2023/06/28 14:18:00 by nmuminov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,25 @@
 # include <sys/errno.h>
 # include <pthread.h>
 
+typedef struct s_data t_data;
+
 typedef struct s_philo {
-	int			nbr_philo;
-	int			id;
-	int			fork;
-	int			time_to_eat;
-	int			last_meal;
-	int			time_to_sleep;
-	int			time_to_die; 
-	int			status;
-	int			nbr_must_eat;
-	
+
+	int							id;
+	pthread_mutex_t				fork;
+	unsigned long long			last_meal;
+	t_data						*data;
 }			t_philo;
 
+struct s_data {
+	int						nbr_philo;
+	t_philo					*philo_tab;
+	int						time_to_eat;
+	int						time_to_sleep;
+	int						time_to_die;
+	int						nbr_must_eat;
+	int						alive;
+	int						start_time;
+}
 
 #endif
-
-void pthread_exit(void *);
