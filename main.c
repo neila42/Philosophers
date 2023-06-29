@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/29 14:48:31 by nmuminov         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:27:58 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,28 @@ void    free_philo(t_philo *philo, t_data *data)
 	free(philo->data->philo_tab);
 }
 
+//est ce que je dois appeler la fonction a chaque fois ? Utiliser variable alive au lieu de la fonction ?
 int	check_alive(t_philo *philo, t_data *data)
 {
 	data->alive = 1;
 	if (set_time() - philo->last_meal <= data->time_to_die)
 	{
 		philo_start(set_time(), &philo->data->philo_tab[philo->id], "the philo died");
-		free_philo(philo, data);
+		free(&philo->data->philo_tab[philo->id]);
+        pthread_mutex_destroy(&philo->data->philo_tab[philo->id]);
 		data->alive = 0;
 	}
 	return (data->alive);
 }
+
+//est ce que je dois check qu'ils mangent/dorment/pensent le bon nbr de temps ??
 
 void    philo_eat(t_philo *philo, t_data *data)
 {
 	if (check_alive(philo, data) == 1)
 	{
 		take_forks(philo);
+		philo->last_meal = set_time();
 		philo->last_meal = set_time();
 		philo_start(set_time(), "the philo is eating", philo);
 	}
@@ -79,14 +84,14 @@ void    philo_eat(t_philo *philo, t_data *data)
 void    philo_sleep(t_philo *philo, t_data *data)
 {
 	if (check_alive(philo, data) == 1)
-	else if ()
-    	philo_start(set_time(), "the philo is sleeping", philo);   
+        philo_start(set_time(), "the philo is sleeping", philo);   
 }
 
-// void    philo_think(t_philo *philo)
-// {
-//     philo_start(set_time(), "the philo is thinking", philo);
-// }
+void    philo_think(t_philo *philo, t_data *data)
+{
+    if (check_alive(philo, data))
+        philo_start(set_time(), "the philo is thinking", philo);
+}
 
 int	philo_day(t_philo *philo, t_data *data)
 {
@@ -139,8 +144,22 @@ int	init_philo(t_data *data)
 	return (0);
 }
 
-// int	main()
-// {
-// 	data->start_time = set_time();
-//	data->alive = check_alive(philo, data);
-// }
+int	main() //utilisation de ARGC ARGV
+{
+    t_data *data;
+    t_data *philo;
+    
+    argc = init_philo(data);
+    if (data->philo_tab == NULL)
+        fail("failed init the philo array");
+    data->start_time = set_time();
+    if (data->start_time = NULL)
+        fail("failed init the time");
+	data->alive = check_alive(philo, data);
+    if (data->alive == 0)
+        return ("the philo is dead");
+    philo_day(philo, data);
+    if (data->nbr_must_eat == 0)
+        free_philo(philo, data);
+    return (0);
+}
