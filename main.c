@@ -6,7 +6,7 @@
 /*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/29 13:55:50 by nmuminov         ###   ########.fr       */
+/*   Updated: 2023/06/29 14:48:31 by nmuminov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,34 @@ void    philo_eat(t_philo *philo, t_data *data)
 	if (check_alive(philo, data) == 1)
 	{
 		take_forks(philo);
-		philo->last_meal = set_time();Cristiano Ronaldo SUUUUUUUUU
+		philo->last_meal = set_time();
 		philo_start(set_time(), "the philo is eating", philo);
 	}
     leave_forks(philo);
     data->nbr_must_eat --;
 }
 
-// void    philo_sleep(t_philo *philo)
-// {
-//     philo_start(set_time(), "the philo is sleeping", philo);   
-// }
+void    philo_sleep(t_philo *philo, t_data *data)
+{
+	if (check_alive(philo, data) == 1)
+	else if ()
+    	philo_start(set_time(), "the philo is sleeping", philo);   
+}
 
 // void    philo_think(t_philo *philo)
 // {
 //     philo_start(set_time(), "the philo is thinking", philo);
 // }
 
-// int	philo_day(t_philo *philo)
-// {
-// 	while (philo->alive)
-// 	{
-		//eating
-		//sleeping
-		//thinking
-// 	}
-// }
+int	philo_day(t_philo *philo, t_data *data)
+{
+	while (data->alive == 1)
+	{
+		philo_eat(philo, data);
+		philo_sleep(philo, data);
+		philo_think(philo, data);
+	}
+}
 
 void    philo_start(t_philo *philo, t_data *data, char *str)
 {
