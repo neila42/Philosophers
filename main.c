@@ -6,7 +6,7 @@
 /*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/29 11:40:32 by nmuminov         ###   ########.fr       */
+/*   Updated: 2023/06/29 13:55:50 by nmuminov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,28 @@ void    free_philo(t_philo *philo, t_data *data)
 	free(philo->data->philo_tab);
 }
 
-void	check_alive(t_philo *philo, t_data *data)
+int	check_alive(t_philo *philo, t_data *data)
 {
-	while (&philo->data->philo_tab[philo->id] < data->nbr_philo)
-	{
+	data->alive = 1;
 	if (set_time() - philo->last_meal <= data->time_to_die)
 	{
 		philo_start(set_time(), &philo->data->philo_tab[philo->id], "the philo died");
 		free_philo(philo, data);
 		data->alive = 0;
 	}
-	else
-	data->alive = 1;
+	return (data->alive);
 }
 
 void    philo_eat(t_philo *philo, t_data *data)
 {
-	if (data->alive == 1)
+	if (check_alive(philo, data) == 1)
 	{
+		take_forks(philo);
+		philo->last_meal = set_time();Cristiano Ronaldo SUUUUUUUUU
 		philo_start(set_time(), "the philo is eating", philo);
 	}
-    philo->last_meal = set_time;
     leave_forks(philo);
-    philo->nbr_must_eat --;
+    data->nbr_must_eat --;
 }
 
 // void    philo_sleep(t_philo *philo)
