@@ -3,163 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/06/29 16:27:58 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:11:13 by nmuminov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void    take_forks(t_philo *philo) 
+void	check_acav(t_data *data, int argc, char **argv)
 {
-	int next_id;
-
-	next_id = philo->id + 1;
-	if (next_id >= philo->data->nbr_philo)
-		next_id = 0;
-	pthread_mutex_lock(&philo->data->philo_tab[philo->id].fork);
-    philo_start(set_time(), &philo->data->philo_tab[philo->id], "The philo took a fork");
-	pthread_mutex_lock(&philo->data->philo_tab[philo->id + 1].fork);
-	philo_start(set_time(), &philo->data->philo_tab[philo->id + 1], "The philo took a second fork");
+	if (argc < 5 || argc > 6)
+		fail("to many or not enough arg");
+	else if (argv[1] == 0)
+		fail("no philo");
+	else if (only_digits(argc, argv))
+		fail("not only digits");
+	data->nbr_philo = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->nbr_must_eat = ft_atoi(argv[5]);
+	else
+		data->nbr_must_eat = -1;
 }
 
-void    leave_forks(t_philo *philo)
+int	main(int argc, char **argv)
 {
-	int next_id;
+    t_data data;
+    t_data philo;
 
-	next_id = philo->id + 1;
-	if (next_id >= philo->data->nbr_philo)
-      next_id = 0;
-    pthread_mutex_unlock(&philo->data->philo_tab[philo->id].fork);
-    philo_start(set_time(), &philo->data->philo_tab[philo->id], "The philo put the fork down");
-	pthread_mutex_unlock(&philo->data->philo_tab[philo->id + 1].fork);
-	philo_start(set_time(), &philo->data->philo_tab[philo->id + 1], "The philo put the fork down");
-}
-
-void    free_philo(t_philo *philo, t_data *data)
-{
-    int i;
-    
-    i = 0;
-    while (i < data->nbr_philo)
-    {
-		pthread_mutex_destroy(&data->philo_tab[i].fork);
-        free(&philo->data->philo_tab[philo->id]);
-        i ++;
-    }
-	free(philo->data->philo_tab);
-}
-
-//est ce que je dois appeler la fonction a chaque fois ? Utiliser variable alive au lieu de la fonction ?
-int	check_alive(t_philo *philo, t_data *data)
-{
-	data->alive = 1;
-	if (set_time() - philo->last_meal <= data->time_to_die)
-	{
-		philo_start(set_time(), &philo->data->philo_tab[philo->id], "the philo died");
-		free(&philo->data->philo_tab[philo->id]);
-        pthread_mutex_destroy(&philo->data->philo_tab[philo->id]);
-		data->alive = 0;
-	}
-	return (data->alive);
-}
-
-//est ce que je dois check qu'ils mangent/dorment/pensent le bon nbr de temps ??
-
-void    philo_eat(t_philo *philo, t_data *data)
-{
-	if (check_alive(philo, data) == 1)
-	{
-		take_forks(philo);
-		philo->last_meal = set_time();
-		philo->last_meal = set_time();
-		philo_start(set_time(), "the philo is eating", philo);
-	}
-    leave_forks(philo);
-    data->nbr_must_eat --;
-}
-
-void    philo_sleep(t_philo *philo, t_data *data)
-{
-	if (check_alive(philo, data) == 1)
-        philo_start(set_time(), "the philo is sleeping", philo);   
-}
-
-void    philo_think(t_philo *philo, t_data *data)
-{
-    if (check_alive(philo, data))
-        philo_start(set_time(), "the philo is thinking", philo);
-}
-
-int	philo_day(t_philo *philo, t_data *data)
-{
-	while (data->alive == 1)
-	{
-		philo_eat(philo, data);
-		philo_sleep(philo, data);
-		philo_think(philo, data);
-	}
-}
-
-void    philo_start(t_philo *philo, t_data *data, char *str)
-{
-	unsigned long long time;
-
-	time = set_time() - data->start_time;
-    printf("%llu %d %s\n", time, philo->id, str);
-}
-
-unsigned long long	set_time(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-int fail(char *s)
-{
-    printf(s);
-    return (1);
-}
-
-int	init_philo(t_data *data)
-{
-	pthread_t	thread;
-	int			i;
-
-	i = 0;
-	data->philo_tab = malloc(data->nbr_philo * sizeof(t_philo));
-	while (i < data->nbr_philo)
-	{
-		data->philo_tab[i].id ++;
-		pthread_mutex_init(&data->philo_tab[i].fork, NULL);
-		data->philo_tab[i].last_meal = set_time();
-		if (pthread_create(&thread, NULL, philo_day, &data->philo_tab[i]) != 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	main() //utilisation de ARGC ARGV
-{
-    t_data *data;
-    t_data *philo;
-    
-    argc = init_philo(data);
-    if (data->philo_tab == NULL)
-        fail("failed init the philo array");
-    data->start_time = set_time();
-    if (data->start_time = NULL)
-        fail("failed init the time");
-	data->alive = check_alive(philo, data);
-    if (data->alive == 0)
-        return ("the philo is dead");
-    philo_day(philo, data);
-    if (data->nbr_must_eat == 0)
-        free_philo(philo, data);
+	check_acav(&data, argc, argv);
+	init_philo(&data);
+    data.start_time = set_time();
+	data.alive = 1;
+	check(&data);
+    philo_day(&philo);
     return (0);
 }

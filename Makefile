@@ -5,6 +5,10 @@ RM			= rm -rf
 OBJ			= $(SRC:.c=.o)
 
 SRC =	main.c \
+		day.c \
+		func.c \
+		util.c \
+		fork.c \
 
 all:	$(NAME)
 
@@ -12,8 +16,7 @@ all:	$(NAME)
 	${CC} -c -o $@ $^ ${CFLAGS}
 	
 $(NAME):	$(OBJ) 
-			${MAKE} -C
-			$(CC) ${CFLAGS} -o ${NAME} ${OBJ} -framework OpenGL -framework AppKit
+			$(CC) ${CFLAGS} -o ${NAME} ${OBJ}
 
 
 clean:
@@ -22,7 +25,6 @@ clean:
 
 fclean:		clean
 			$(RM) $(NAME)
-			$(MAKE) -C
 
 re:			fclean all
 
