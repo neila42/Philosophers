@@ -1,6 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   func.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 19:56:40 by Probook           #+#    #+#             */
+/*   Updated: 2023/07/03 23:47:32 by Probook          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   jspencore.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
@@ -31,7 +43,7 @@ void    philo_start(t_philo *philo, t_data *data, char *str)
 	unsigned long long time;
 
 	time = set_time() - data->start_time;
-	if (data->alive != 0)
+	if (data->alive == 0)
     	printf("%llu %d %s\n", time, philo->id, str);
 }
 
@@ -70,7 +82,7 @@ void check(t_data *data)
 	int		philo_ate_enough;
 	
 
-	while (data->alive != 0)
+	while (data->alive == 0)
 	{
 		i = 0;
 		philo_ate_enough = 0;
@@ -84,11 +96,13 @@ void check(t_data *data)
 			}
 			if (data->philo_tab[i].nbr_eat == data->nbr_must_eat && data->nbr_must_eat != -1)
 				philo_ate_enough++;
-		}			
+			i++;
+		}
 		if (philo_ate_enough == data->nbr_philo)
 		{
+			data->alive = 1;
 			free_philo(data);
-			philo_start(&data->philo_tab[i], data, "the philo died after eating enough");
+			philo_start(&data->philo_tab[i - 1], data, "the philo died after eating enough");
 			return ;	
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/03 16:11:13 by nmuminov         ###   ########.fr       */
+/*   Updated: 2023/07/04 00:09:48 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ void	check_acav(t_data *data, int argc, char **argv)
 int	main(int argc, char **argv)
 {
     t_data data;
-    t_data philo;
-
+    t_philo philo;
+	
 	check_acav(&data, argc, argv);
-	init_philo(&data);
+	if (init_philo(&data) != 0)
+		fail("failed init philo tab");
     data.start_time = set_time();
-	data.alive = 1;
+	data.alive = 0;
+	philo.data = &data;
 	check(&data);
     philo_day(&philo);
     return (0);

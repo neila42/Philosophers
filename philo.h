@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/03 14:17:26 by nmuminov         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:11:30 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/wait.h>
 # include <sys/errno.h>
 # include <pthread.h>
-
 
 typedef struct s_data t_data;
 
@@ -40,6 +39,7 @@ struct s_data {
 	t_philo					*philo_tab;
 	int						time_to_eat;
 	int						time_to_sleep;
+	int                     time_to_think;
 	unsigned long long		time_to_die;
 	int						nbr_must_eat;
 	int						alive;
