@@ -14,9 +14,15 @@
 
 int	check_alive(t_philo *philo, t_data *data)
 {
-	data->alive = 1;
-	if (set_time() - philo->last_meal > data->time_to_die)
-		data->alive = 0;
+	int value;
+
+	value = 1;
+	get_value_int(&data->alive, &value);
+	if (set_time() - get_value_ull(&philo->last_meal, NULL) > data->time_to_die)
+	{
+		value = 0;
+		get_value_int(&data->alive, &value);
+	}
 	return (data->alive);
 }
 

@@ -26,12 +26,40 @@ void	free_philo(t_data *data)
 	free(data->philo_tab);
 }
 
+int 	get_value_int(int *var, const int *value)
+{
+	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	int res;
+
+	pthread_mutex_lock(&mutex);
+	if (value != NULL)
+		*var = *value;
+	res = *var;
+	pthread_mutex_unlock(&mutex);
+	return (res);
+}
+
+
+unsigned long long	get_value_ull(unsigned long long *var, const unsigned long long *value)
+{
+	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	unsigned long long res;
+
+	pthread_mutex_lock(&mutex);
+	if (value != NULL)
+		*var = *value;
+	res = *var;
+	pthread_mutex_unlock(&mutex);
+	return (res);
+}
+
+
 void	philo_start(t_philo *philo, t_data *data, char *str)
 {
 	unsigned long long	time;
 
 	time = set_time() - data->start_time;
-	if (data->alive == 1)
+	if (get_value_int(&data->alive, NULL) == 1)
 		printf("%llu %d %s\n", time, philo->id, str);
 }
 
