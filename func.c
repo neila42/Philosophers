@@ -78,8 +78,9 @@ void	check(t_data *data)
 		{
 			if (check_alive(&data->philo_tab[i], data) == 0)
 			{
-				free_philo(data);
 				philo_start(&data->philo_tab[i], data, "the philo died");
+				data->alive = 0;
+				free_philo(data);
 				return ;
 			}
 			if (data->philo_tab[i].nbr_eat == data->nbr_must_eat
@@ -89,10 +90,8 @@ void	check(t_data *data)
 		}
 		if (philo_ate_enough == data->nbr_philo)
 		{
-			data->alive = 0;
 			free_philo(data);
-			philo_start(&data->philo_tab[i - 1], data,
-				"the philo died after eating enough");
+			data->alive = 0;
 			return ;
 		}
 	}

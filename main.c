@@ -33,15 +33,12 @@ void	check_acav(t_data *data, int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	t_philo	philo;
 
 	check_acav(&data, argc, argv);
-	if (init_philo(&data) != 0)
-		fail("failed init philo tab");
 	data.start_time = set_time();
 	data.alive = 1;
-	philo.data = &data;
+	if (init_philo(&data) != 0)
+		fail("failed init philo tab");
 	check(&data);
-	philo_day(&philo);
 	return (0);
 }

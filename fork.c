@@ -20,10 +20,10 @@ void	take_forks(t_philo *philo)
 	if (next_id >= philo->data->nbr_philo)
 		next_id = 0;
 	pthread_mutex_lock(&philo->fork);
-	philo_start(&philo->data->philo_tab[philo->id], philo->data,
+	philo_start(philo, philo->data,
 		"The philo took a fork");
 	pthread_mutex_lock(&philo->data->philo_tab[next_id].fork);
-	philo_start(&philo->data->philo_tab[next_id], philo->data,
+	philo_start(philo, philo->data,
 		"The philo took a second fork");
 }
 
@@ -33,11 +33,11 @@ void	leave_forks(t_philo *philo)
 
 	next_id = philo->id + 1;
 	if (next_id >= philo->data->nbr_philo)
-	next_id = 0;
-	pthread_mutex_unlock(&philo->data->philo_tab[philo->id].fork);
-	philo_start(&philo->data->philo_tab[philo->id], philo->data,
+		next_id = 0;
+	pthread_mutex_unlock(&philo->fork);
+	philo_start(philo, philo->data,
 		"The philo put the fork down");
 	pthread_mutex_unlock(&philo->data->philo_tab[next_id].fork);
-	philo_start(&philo->data->philo_tab[next_id], philo->data,
+	philo_start(philo, philo->data,
 		"The philo put the fork down");
 }

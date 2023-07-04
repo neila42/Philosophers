@@ -1,5 +1,5 @@
 NAME		= philo
-CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=thread
 RM			= rm -rf
 
 OBJ			= $(SRC:.c=.o)
@@ -10,10 +10,12 @@ SRC =	main.c \
 		util.c \
 		fork.c \
 
+HEADER = philo.h \
+
 all:	$(NAME)
 
-%.o : %.c
-	${CC} -c -o $@ $^ ${CFLAGS}
+%.o : %.c $(HEADER)
+	${CC} -c -o $@ $< ${CFLAGS}
 	
 $(NAME):	$(OBJ) 
 			$(CC) ${CFLAGS} -o ${NAME} ${OBJ}
@@ -21,7 +23,6 @@ $(NAME):	$(OBJ)
 
 clean:
 			$(RM) $(OBJ)
-			$(MAKE) -C
 
 fclean:		clean
 			$(RM) $(NAME)

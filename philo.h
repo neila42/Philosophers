@@ -38,7 +38,6 @@ struct s_data {
 	t_philo					*philo_tab;
 	int						time_to_eat;
 	int						time_to_sleep;
-	int						time_to_think;
 	unsigned long long		time_to_die;
 	int						nbr_must_eat;
 	int						alive;

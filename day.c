@@ -15,7 +15,7 @@
 int	check_alive(t_philo *philo, t_data *data)
 {
 	data->alive = 1;
-	if (set_time() - philo->last_meal <= data->time_to_die)
+	if (set_time() - philo->last_meal > data->time_to_die)
 		data->alive = 0;
 	return (data->alive);
 }
@@ -47,7 +47,6 @@ void	philo_think(t_philo *philo, t_data *data)
 	if (data->alive == 1)
 	{
 		philo_start(&data->philo_tab[philo->id], data, "the philo is thinking");
-		usleep(data->time_to_think);
 	}
 }
 
