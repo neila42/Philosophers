@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/04 00:09:48 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/04 10:55:09 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	check_acav(t_data *data, int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-    t_data data;
-    t_philo philo;
-	
+	t_data	data;
+	t_philo	philo;
+
 	check_acav(&data, argc, argv);
 	if (init_philo(&data) != 0)
 		fail("failed init philo tab");
-    data.start_time = set_time();
-	data.alive = 0;
+	data.start_time = set_time();
+	data.alive = 1;
 	philo.data = &data;
 	check(&data);
-    philo_day(&philo);
-    return (0);
+	philo_day(&philo);
+	return (0);
 }

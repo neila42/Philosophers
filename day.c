@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/04 00:13:35 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/04 10:53:01 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	check_alive(t_philo *philo, t_data *data)
 {
-	data->alive = 0;
+	data->alive = 1;
 	if (set_time() - philo->last_meal <= data->time_to_die)
-		data->alive = 1;
+		data->alive = 0;
 	return (data->alive);
 }
 
-void    philo_eat(t_philo *philo, t_data *data)
+void	philo_eat(t_philo *philo, t_data *data)
 {
-	if (data->alive == 0)
+	if (data->alive == 1)
 	{
 		take_forks(philo);
 		philo_start(&data->philo_tab[philo->id], data, "the philo is eating");
@@ -33,20 +33,20 @@ void    philo_eat(t_philo *philo, t_data *data)
 	}
 }
 
-void    philo_sleep(t_philo *philo, t_data *data)
+void	philo_sleep(t_philo *philo, t_data *data)
 {
-	if (data->alive == 0)
+	if (data->alive == 1)
 	{
-        philo_start(&data->philo_tab[philo->id], data, "the philo is sleeping");
+		philo_start(&data->philo_tab[philo->id], data, "the philo is sleeping");
 		usleep(data->time_to_sleep);
 	}
 }
 
-void    philo_think(t_philo *philo, t_data *data)
+void	philo_think(t_philo *philo, t_data *data)
 {
-    if (data->alive == 0)
+	if (data->alive == 1)
 	{
-        philo_start(&data->philo_tab[philo->id], data, "the philo is thinking");
+		philo_start(&data->philo_tab[philo->id], data, "the philo is thinking");
 		usleep(data->time_to_think);
 	}
 }
@@ -54,15 +54,15 @@ void    philo_think(t_philo *philo, t_data *data)
 void	*philo_day(void *raw)
 {
 	t_data	*data;
-	t_philo *philo;
-	
+	t_philo	*philo;
+
 	philo = (t_philo *)raw;
 	data = philo->data;
-	while (data->alive == 0)
+	while (data->alive == 1)
 	{
 		philo_eat(philo, data);
 		philo_sleep(philo, data);
 		philo_think(philo, data);
 	}
-	return NULL;
+	return (NULL);
 }

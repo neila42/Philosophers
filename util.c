@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/03 16:13:03 by nmuminov         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:33:59 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-int fail(char *s)
+int	fail(char *s)
 {
-    printf("%s\n", s);
-    return (1);
+	printf("%s\n", s);
+	return (1);
 }
