@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/04 10:53:01 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/04 11:27:47 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	*philo_day(void *raw)
 
 	philo = (t_philo *)raw;
 	data = philo->data;
+	if (philo->id % 2)
+		usleep(200);
 	while (data->alive == 1)
 	{
 		philo_eat(philo, data);
