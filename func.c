@@ -39,7 +39,6 @@ int 	get_value_int(int *var, const int *value)
 	return (res);
 }
 
-
 unsigned long long	get_value_ull(unsigned long long *var, const unsigned long long *value)
 {
 	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -97,8 +96,10 @@ void	check(t_data *data)
 {
 	int		i;
 	int		philo_ate_enough;
+	int 	value;
 
-	while (data->alive == 1)
+	value = 0;
+	while (get_value_int(&data->alive, NULL) == 1)
 	{
 		i = 0;
 		philo_ate_enough = 0;
@@ -107,19 +108,20 @@ void	check(t_data *data)
 			if (check_alive(&data->philo_tab[i], data) == 0)
 			{
 				philo_start(&data->philo_tab[i], data, "the philo died");
-				data->alive = 0;
+				get_value_int(&data->alive, &value);
 				free_philo(data);
 				return ;
 			}
-			if (data->philo_tab[i].nbr_eat == data->nbr_must_eat
-				&& data->nbr_must_eat != -1)
+			if (get_value_int(&data->philo_tab[i].nbr_eat, NULL) == get_value_int(&data->nbr_must_eat, NULL)
+				&& get_value_int(&data->nbr_must_eat, NULL) != -1)
 				philo_ate_enough++;
 			i++;
 		}
 		if (philo_ate_enough == data->nbr_philo)
 		{
 			free_philo(data);
-			data->alive = 0;
+			get_value_int(&data->alive, &value);
+			get_value_int(&data->alive, &value);
 			return ;
 		}
 	}

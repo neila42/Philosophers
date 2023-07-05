@@ -23,25 +23,30 @@ int	check_alive(t_philo *philo, t_data *data)
 		value = 0;
 		get_value_int(&data->alive, &value);
 	}
-	return (data->alive);
+	return (get_value_int(&data->alive, NULL));
 }
 
 void	philo_eat(t_philo *philo, t_data *data)
 {
-	if (data->alive == 1)
+	int nbr_must_eat;
+	unsigned long long	value;
+
+	if (get_value_int(&data->alive, NULL) == 1)
 	{
 		take_forks(philo);
 		philo_start(&data->philo_tab[philo->id], data, "the philo is eating");
 		usleep(data->time_to_eat);
-		philo->last_meal = set_time();
+		value = set_time();
+		get_value_ull(&philo->last_meal, &value);
 		leave_forks(philo);
-		data->nbr_must_eat --;
+		nbr_must_eat = get_value_int(&data->nbr_must_eat, NULL) - 1;
+		get_value_int(&data->nbr_must_eat, &nbr_must_eat);
 	}
 }
 
 void	philo_sleep(t_philo *philo, t_data *data)
 {
-	if (data->alive == 1)
+	if (get_value_int(&data->alive, NULL) == 1)
 	{
 		philo_start(&data->philo_tab[philo->id], data, "the philo is sleeping");
 		usleep(data->time_to_sleep);
@@ -50,7 +55,7 @@ void	philo_sleep(t_philo *philo, t_data *data)
 
 void	philo_think(t_philo *philo, t_data *data)
 {
-	if (data->alive == 1)
+	if (get_value_int(&data->alive, NULL) == 1)
 	{
 		philo_start(&data->philo_tab[philo->id], data, "the philo is thinking");
 	}
@@ -65,7 +70,7 @@ void	*philo_day(void *raw)
 	data = philo->data;
 	if (philo->id % 2)
 		usleep(200);
-	while (data->alive == 1)
+	while (get_value_int(&data->alive, NULL) == 1)
 	{
 		philo_eat(philo, data);
 		philo_sleep(philo, data);
