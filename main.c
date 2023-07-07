@@ -12,14 +12,14 @@
 
 #include "philo.h"
 
-void	check_acav(t_data *data, int argc, char **argv)
+int	check_acav(t_data *data, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
-		fail("to many or not enough arg");
+		return (fail("to many or not enough arg"));
 	else if (argv[1] == 0)
-		fail("no philo");
+		return (fail("no philo"));
 	else if (only_digits(argc, argv))
-		fail("not only digits");
+		return (fail("not only digits"));
 	data->nbr_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -28,17 +28,21 @@ void	check_acav(t_data *data, int argc, char **argv)
 		data->nbr_must_eat = ft_atoi(argv[5]);
 	else
 		data->nbr_must_eat = -1;
+	if (data->time_to_die <= 0 || data->time_to_eat <= 0 || data->time_to_sleep <= 0)
+		return (fail("arg equal to zero"));
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	check_acav(&data, argc, argv);
+	if (check_acav(&data, argc, argv))
+		return (1);
 	data.start_time = set_time();
 	data.alive = 1;
 	if (init_philo(&data) != 0)
-		fail("failed init philo tab");
+		return (fail("failed init philo tab"));
 	check(&data);
 	return (0);
 }

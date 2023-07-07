@@ -59,9 +59,10 @@ int					init_philo(t_data *data);
 void				check(t_data *data);
 int					only_digits(int argc, char **argv);
 int					ft_atoi(const char *str);
-void				check_acav(t_data *data, int argc, char **argv);
+int 				check_acav(t_data *data, int argc, char **argv);
 
 unsigned long long	get_value_ull(unsigned long long *var, const unsigned long long *value);
 int 				get_value_int(int *var, const int *value);
+int 				mutex_alive(int *var, const int *value);
 
 #endif

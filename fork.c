@@ -22,9 +22,23 @@ void	take_forks(t_philo *philo)
 	pthread_mutex_lock(&philo->fork);
 	philo_start(philo, philo->data,
 		"The philo took a fork");
-	pthread_mutex_lock(&philo->data->philo_tab[next_id].fork);
+	if (mutex_alive(&philo->data->alive, NULL) == 1)
+		pthread_mutex_lock(&philo->data->philo_tab[next_id].fork);
 	philo_start(philo, philo->data,
 		"The philo took a second fork");
+}
+
+int 	mutex_alive(int *var, const int *value)
+{
+	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	int res;
+
+	pthread_mutex_lock(&mutex);
+	if (value != NULL)
+		*var = *value;
+	res = *var;
+	pthread_mutex_unlock(&mutex);
+	return (res);
 }
 
 void	leave_forks(t_philo *philo)
