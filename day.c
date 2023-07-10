@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/04 11:27:47 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/10 12:52:54 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	check_alive(t_philo *philo, t_data *data)
 {
-	int value;
+	int	value;
 
 	value = 1;
 	mutex_alive(&data->alive, &value);
-	if (set_time() - get_value_ull(&philo->last_meal, NULL) >= data->time_to_die)
+	if (set_time() - get_value_ull(&philo->last_meal, NULL)
+		>= data->time_to_die)
 	{
 		philo_start(philo, data, "the philo died");
 		value = 0;
@@ -27,22 +28,9 @@ int	check_alive(t_philo *philo, t_data *data)
 	return (mutex_alive(&data->alive, NULL));
 }
 
-void	check_usleep(t_data *data, unsigned long long time)
-{
-	unsigned long long start_time;
-
-	start_time = set_time();
-	while (mutex_alive(&data->alive, NULL) == 1)
-	{
-		if (start_time + time <= set_time())
-			return ;
-		usleep(10);
-	}
-}
-
 void	philo_eat(t_philo *philo, t_data *data)
 {
-	int nbr_eat;
+	int					nbr_eat;
 	unsigned long long	value;
 
 	if (mutex_alive(&data->alive, NULL) == 1)

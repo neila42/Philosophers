@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/04 11:01:26 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/10 13:26:34 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ int					init_philo(t_data *data);
 void				check(t_data *data);
 int					only_digits(int argc, char **argv);
 int					ft_atoi(const char *str);
-int 				check_acav(t_data *data, int argc, char **argv);
-
-unsigned long long	get_value_ull(unsigned long long *var, const unsigned long long *value);
-int 				get_value_int(int *var, const int *value);
-int 				mutex_alive(int *var, const int *value);
+int					check_acav(t_data *data, int argc, char **argv);
+void				check_usleep(t_data *data, unsigned long long time);
+unsigned long long	get_value_ull(unsigned long long *var,
+						const unsigned long long *value);
+int					get_value_int(int *var, const int *value);
+int					mutex_alive(int *var, const int *value);
 
 #endif

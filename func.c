@@ -6,7 +6,7 @@
 /*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 19:56:40 by Probook           #+#    #+#             */
-/*   Updated: 2023/07/04 10:56:04 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/10 13:01:32 by Probook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,37 +27,10 @@ void	free_philo(t_data *data)
 	free(data->philo_tab);
 }
 
-int 	get_value_int(int *var, const int *value)
-{
-	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	int res;
-
-	pthread_mutex_lock(&mutex);
-	if (value != NULL)
-		*var = *value;
-	res = *var;
-	pthread_mutex_unlock(&mutex);
-	return (res);
-}
-
-unsigned long long	get_value_ull(unsigned long long *var, const unsigned long long *value)
-{
-	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	unsigned long long res;
-
-	pthread_mutex_lock(&mutex);
-	if (value != NULL)
-		*var = *value;
-	res = *var;
-	pthread_mutex_unlock(&mutex);
-	return (res);
-}
-
-
 void	philo_start(t_philo *philo, t_data *data, char *str)
 {
-	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	unsigned long long	time;
+	static pthread_mutex_t	mutex = PTHREAD_MUTEX_INITIALIZER;
+	unsigned long long		time;
 
 	pthread_mutex_lock(&mutex);
 	time = set_time() - data->start_time;
@@ -101,7 +74,7 @@ void	check(t_data *data)
 {
 	int		i;
 	int		philo_ate_enough;
-	int 	value;
+	int		value;
 
 	value = 0;
 	while (mutex_alive(&data->alive, NULL) == 1)
@@ -115,8 +88,8 @@ void	check(t_data *data)
 				free_philo(data);
 				return ;
 			}
-
-			if (get_value_int(&data->philo_tab[i].nbr_eat, NULL) >= get_value_int(&data->nbr_must_eat, NULL)
+			if (get_value_int(&data->philo_tab[i].nbr_eat, NULL)
+				>= get_value_int(&data->nbr_must_eat, NULL)
 				&& get_value_int(&data->nbr_must_eat, NULL) != -1)
 				philo_ate_enough++;
 			i++;
