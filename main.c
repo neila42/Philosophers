@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/10 13:43:32 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/10 16:05:50 by nmuminov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	check_acav(t_data *data, int argc, char **argv)
 		return (fail("no philo"));
 	else if (only_digits(argc, argv))
 		return (fail("not only digits"));
+	else if (ft_strlen(argv[2]) > 10 && ft_atoull(argv[2]) > INT_MAX)
+		return (fail("invalid arg"));
 	data->nbr_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);

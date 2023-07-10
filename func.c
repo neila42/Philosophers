@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 19:56:40 by Probook           #+#    #+#             */
-/*   Updated: 2023/07/10 13:01:32 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:27:30 by nmuminov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,12 @@ int	init_philo(t_data *data)
 
 void	check(t_data *data)
 {
-	int		i;
-	int		philo_ate_enough;
-	int		value;
+	int	value;
 
 	value = 0;
 	while (mutex_alive(&data->alive, NULL) == 1)
 	{
-		i = 0;
-		philo_ate_enough = 0;
-		while (i < data->nbr_philo)
-		{
-			if (check_alive(&data->philo_tab[i], data) == 0)
-			{
-				free_philo(data);
-				return ;
-			}
-			if (get_value_int(&data->philo_tab[i].nbr_eat, NULL)
-				>= get_value_int(&data->nbr_must_eat, NULL)
-				&& get_value_int(&data->nbr_must_eat, NULL) != -1)
-				philo_ate_enough++;
-			i++;
-		}
-		if (philo_ate_enough == data->nbr_philo)
+		if (check_for_check(data) == 1)
 		{
 			mutex_alive(&data->alive, &value);
 			free_philo(data);

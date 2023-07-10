@@ -8,6 +8,7 @@ SRC =	main.c \
 		day.c \
 		func.c \
 		util.c \
+		util2.c \
 		fork.c \
 
 HEADER = philo.h \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Probook <Probook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmuminov <nmuminov@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 13:10:31 by nmuminov          #+#    #+#             */
-/*   Updated: 2023/07/10 13:26:34 by Probook          ###   ########.fr       */
+/*   Updated: 2023/07/10 16:04:48 by nmuminov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <sys/errno.h>
 # include <pthread.h>
+# include <limits.h>
 
 typedef struct s_data	t_data;
 
@@ -65,5 +66,8 @@ unsigned long long	get_value_ull(unsigned long long *var,
 						const unsigned long long *value);
 int					get_value_int(int *var, const int *value);
 int					mutex_alive(int *var, const int *value);
+int					check_for_check(t_data *data);
+size_t				ft_strlen(const char *s);
+unsigned long long	ft_atoull(const char *str);
 
 #endif
